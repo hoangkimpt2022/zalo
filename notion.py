@@ -524,8 +524,10 @@ def send_messages_with_playwright(pairs: List[Tuple[Optional[str], str]]):
     with sync_playwright() as p:
         PROFILE_DIR.mkdir(parents=True, exist_ok=True)
         browser = p.chromium.launch_persistent_context(
-            str(PROFILE_DIR), headless=False,
-            args=["--start-maximized", "--no-sandbox", "--disable-dev-shm-usage"]
+            str(PROFILE_DIR),
+            headless=False,
+            executable_path="/usr/bin/google-chrome",
+            args=["--no-sandbox", "--disable-dev-shm-usage", "--start-maximized"]
         )
         page = browser.new_page()
         try:
