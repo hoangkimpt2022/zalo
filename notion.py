@@ -30,7 +30,7 @@ NOTION_PROP_NAME   = "auto"
 # ⚠️ Thay bằng ID thật của database Tổng lãi NG trên Notion
 NOTION_NG_DB_ID = os.getenv("NOTION_NG_DB_ID", "")
 
-PROFILE_DIR        = Path.home() / ".zalo_playwright_profile"
+PROFILE_DIR        = Path.home() / ".config/google-chrome"
 ZALO_URL           = "https://chat.zalo.me/"
 PAGE_LOAD_TIMEOUT  = 60000
 INPUT_WAIT_SEC     = 30
