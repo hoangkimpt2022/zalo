@@ -795,8 +795,6 @@ def main():
                     
                 user_reply = txt
                 break
-                user_reply = txt
-                break
                 
         if user_reply:
             break
