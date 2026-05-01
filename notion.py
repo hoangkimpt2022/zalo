@@ -30,7 +30,7 @@ NOTION_PROP_NAME   = "auto"
 # ⚠️ Thay bằng ID thật của database Tổng lãi NG trên Notion
 NOTION_NG_DB_ID = os.getenv("NOTION_NG_DB_ID", "")
 
-PROFILE_DIR        = Path.home() / ".config/google-chrome"
+PROFILE_DIR        = Path.home() / ".zalo_playwright_profile"
 ZALO_URL           = "https://chat.zalo.me/"
 PAGE_LOAD_TIMEOUT  = 60000
 INPUT_WAIT_SEC     = 30
@@ -540,29 +540,6 @@ def send_messages_with_playwright(pairs: List[Tuple[Optional[str], str]]):
             print("Failed to open Zalo:", e)
         time.sleep(2)
 
-        try:
-            qr = page.query_selector('canvas, img[alt*="QR"], div[class*="qr"]')
-            if qr:
-                # Chụp ảnh màn hình gửi về Telegram
-                screenshot_path = "/root/zalo/qr_screenshot.png"
-                page.screenshot(path=screenshot_path)
-                
-                # Gửi ảnh qua Telegram
-                with open(screenshot_path, "rb") as f:
-                    requests.post(
-                        f"https://api.telegram.org/bot{TELEGRAM_TOKEN}/sendPhoto",
-                        data={"chat_id": TELEGRAM_CHAT_ID, "caption": "⚠️ Zalo yêu cầu đăng nhập lại! Quét QR này."},
-                        files={"photo": f},
-                        timeout=15
-                    )
-                
-                send_telegram("⚠️ Zalo cần đăng nhập lại — đã gửi ảnh QR. Sau khi quét xong gửi /done để tiếp tục.")
-                
-                # Chờ 5 phút để quét QR
-                time.sleep(300)
-        except Exception as e:
-            print(f"[WARN] Kiểm tra QR lỗi: {e}")
-            
         msg    = send_telegram(f"🟢 Bắt đầu gửi {len(pairs)} tin nhắn Zalo...")
         msg_id = msg.get("result", {}).get("message_id") if msg else None
         total  = len(pairs)
@@ -787,7 +764,8 @@ def main():
                     if msg_id:
                         edit_telegram_message(msg_id, "🔄 Nhận /cancel — đang làm mới...")
                     return main()
-                    
+                user_reply = txt
+                break
         if user_reply:
             break
         time.sleep(1.5)
