@@ -787,15 +787,7 @@ def main():
                     if msg_id:
                         edit_telegram_message(msg_id, "🔄 Nhận /cancel — đang làm mới...")
                     return main()
-                if txt.lower() in ("/huy", "huy", "huỷ", "hủy"):
-                    if msg_id:
-                        edit_telegram_message(msg_id, "❌ Đã hủy — không gửi tin nhắn hôm nay.")
-                    send_telegram("❌ Đã hủy gửi tin nhắn theo yêu cầu.")
-                    return  # Thoát luôn không gửi gì
                     
-                user_reply = txt
-                break
-                
         if user_reply:
             break
         time.sleep(1.5)
